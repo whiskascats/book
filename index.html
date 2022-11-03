@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+  <div class="book">
+    <div class="page book-page book-cover" style="--page-index: 1">
+      <div class="page-half page-half-front">
+      </div>
+      <div class="page-half page-half-back">
+        <div class="page-insert"></div>
+      </div>
+    </div>
+    <div class="page book-page" style="--page-index: 2">
+      <div class="page-half page-half-front">
+        1
+      </div>
+      <div class="page-half page-half-back">
+        2
+      </div>
+    </div>
+    <div class="page book-page book-back">
+      <div class="page-half page-half-front">
+        <div class="page-insert"></div>
+      </div>
+      <div class="page-half page-half-back">        
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+
+
+  <script>
+    const {
+      gsap,
+      ScrollTrigger,
+      gsap: {
+        to,
+        set
+      }
+    } = window;
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.defaults({
+      ease: "power2.in", 
+      markers: true,
+    });
+    // document.querySelector('.book')
+    // gsap.set(".book", {x: 100, y: 50});
+    // gsap.to(".book", {duration: 0, x: 100, y: 50});
+    gsap.to('.book', {
+      scrollTrigger: {
+        scrub: 1, //可以回放
+        start: () => 100,
+        end: () => 400
+      },
+      scale: 1.3,      
+    })
+
+    const PAGES = [...document.querySelectorAll('.book-page:not(:last-child)')];
+    PAGES.forEach((item, index) => {
+      gsap.to(item, {
+        scrollTrigger: {
+          scrub: 2, //可以回放
+          start: () => 400 + 300*index,
+          end: () => 700 + 300*index
+        },
+        rotateY: '-180' 
+      })
+    })
+    
+  </script>
+</body>
+</html>
