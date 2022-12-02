@@ -11,8 +11,9 @@
 }
 body{
   width: 10vw;
-  height: calc(var(--page-count) * 500px + 200px);
+  height: 5000px;
   background-color: var(--table);
+  overflow-x: hidden;
 }
 
 .page {
@@ -85,7 +86,7 @@ body{
   transform-origin: 0 50%;
 }
 
-.book-cover, .book-back {
+.book-cover {
   border-radius: 0 5% 5% 0;
   height: 100%;
   width: 100%;
@@ -94,14 +95,17 @@ body{
   left: 0;
   background: var(--cover);
 }
-
-
-.book-page:not(.book-cover ):not(.book-back) .page-half {
-  background: var(--page);
+.book-cover-front, .book-cover-back {
+  transform-origin: 0 50%;
+}
+.book-cover-front .page-half-back, .book-cover-back .page-half-front  {
+  border-right: 1rem solid var(--spine);
+}
+.book-cover-back .book-insert {
+  left: 0;
+  border-radius: 0 5% 5% 0;
 }
 
-
-.book-back .page-insert {
-  border-radius: 0 5% 5% 0;
-  left: 0;
+.book-page:not(.book-cover) .page-half {
+  background: repeating-linear-gradient(0deg, transparent 0 1rem, var(--underline) 1rem calc(1rem + 1px), transparent calc(1rem + 1px)) 0 1rem/100% 100% no-repeat, var(--page);
 }

@@ -142,7 +142,6 @@
             transform: translate(0, -50%);
             height: 94%;
             width: 94%;
-            z-index: calc(((var(--page-count) + 2) - var(--page-index)) * 2);
             transform-origin: 0% 50%;
         }
 
@@ -178,7 +177,7 @@
         }
 
         .book__page:not(.book__cover) .page__half {
-            background: repeating-linear-gradient(0deg, transparent 0 1rem, var(--underline) 1rem calc(1rem + 1px), transparent calc(1rem + 1px)) 0 1rem/100% 100% no-repeat, var(--page);
+            background: repeating-linear-gradient(0deg, transparent 0 1rem, rgba(64, 64, 64, 0.4) 1rem calc(1rem + 1px), transparent calc(1rem + 1px)) 0 1rem/100% 100% no-repeat, #e6e6e6;
         }
 
         .sticker {
@@ -217,36 +216,22 @@
             height: 90%;
             -o-object-fit: center;
             object-fit: center;
-            z-index: 2;
         }
     </style>
-
-    <script>
-        window.console = window.console || function(t) {};
-    </script>
-
-
-
-    <script>
-        if (document.location.search.match(/type=embed/gi)) {
-            window.parent.postMessage("resize", "*");
-        }
-    </script>
 
 
 </head>
 
 <body translate="no" style="">
     <div class="book" style="translate: none; rotate: none; scale: none; transform: translate(-50%, -50%) scale(0.5, 0.5);">
-        <div class="book__spine"></div>
-        <div class="page book__page book__cover book__cover--front" style="--page-index: 1; translate: none; rotate: none; scale: none; transform: translate(0%, -50%) translate3d(0px, 0px, 13px);">
+        <!-- <div class="page book__page book__cover book__cover--front" style="--page-index: 1; translate: none; rotate: none; scale: none; transform: translate(0%, -50%) translate3d(0px, 0px, 13px);">
             <div class="page__half page__half--front">
 
             </div>
             <div class="page__half page__half--back">
                 <div class="book__insert"></div>
             </div>
-        </div>
+        </div> -->
         <div class="page book__page" style="--page-index: 2; translate: none; rotate: none; scale: none; transform: translate(0%, -50%) translate3d(0px, 0px, -1px);">
             <div class="page__half page__half--front"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/605876/Pino-sketch.svg">
                 <div class="page__number">1</div>
@@ -327,12 +312,8 @@
                 <div class="page__number">20</div>
             </div>
         </div>
-        <div class="page book__page book__cover book__cover--back">
-            <div class="book__insert"><img class="gsap-logo" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/logo-man.svg" style="opacity: 0;"></div>
-        </div>
     </div>
     <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
-
     <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/ScrollTrigger.min.js"></script>
     <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
     <script id="rendered-js">
@@ -397,7 +378,6 @@
 
 
         });
-        //# sourceURL=pen.js
     </script>
 
 
