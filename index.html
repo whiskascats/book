@@ -18,15 +18,15 @@
       --spine: #000;
       --cover: #1a1a1a;
       --bg: #4d4d4d;
-      --insert: #d9d9d9;
+      --insert: #E8E3C6;
       --page: #e6e6e6;
     }
     body {      
       width: 100%;
-      height: 3000px;
+      height: var(--page-count)px;
       background: url(./wood.jpg) fixed no-repeat center center / cover;
     }
-    .book {
+    #book {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -41,8 +41,11 @@
       width: 100%;
       height: 100%;
       transform-origin: 0 50%;
-      border-radius: 0 0 5% 5%;
       transform-style: preserve-3d;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      box-shadow: -2px 0 #000;
     }
     .page-half {
       background-color: #fff;
@@ -62,7 +65,15 @@
       border-radius: 0 5% 5% 0;
     }
     .book-cover .page-half-front {
-      background-color: #000;
+      background: #000;
+    }
+    .book-back .page-half-back {
+      background: #000;
+    }
+    .book-cover .page-half-back, .book-back .page-half-front {
+      height: 93%;
+      width: 90%;
+      background: var(--insert)
     }
     .page-half-back {
       transform: rotateY(180deg) translate3d(0,0,1px);
@@ -71,24 +82,24 @@
   </style>
 </head>
 <body>
-  <div class="book">
+  <div id="book">
     <div class="page book-page book-cover" style="transform: translate3d(0px, 0px, 1px);">
       <div class="page-half page-half-front">
-        123
-      </div>
-      <div class="page-half page-half-back">
 
       </div>
+      <div class="page-half page-half-back">
+        
+      </div>
     </div>
-    <div class="page book-page" style="transform: translate3d(0px, 0px, 0px);">
+    <div class="page book-page" :style="'transform: translate3d(0px, 0px, -'+index+'px);'" v-for="(count, index) in pageCount">
       <div class="page-half page-half-front">
-        1
+        {{count}}
       </div>
       <div class="page-half page-half-back">
-        2
+        {{count}}
       </div>
     </div>
-    <div class="page book-page" style="transform: translate3d(0px, 0px, -1px);">
+    <!-- <div class="page book-page" style="transform: translate3d(0px, 0px, -1px);">
       <div class="page-half page-half-front">
         3
       </div>
@@ -104,7 +115,7 @@
         6
       </div>
     </div>
-    <div class="page book-page" style="transform: translate3d(0px, 0px, -3px);">
+    <div class="page book-page" style="transform: translate3d(0px, 0px, -4px);">
       <div class="page-half page-half-front">
         7
       </div>
@@ -112,35 +123,80 @@
         8
       </div>
     </div>
+    <div class="page book-page" style="transform: translate3d(0px, 0px, -5px);">
+      <div class="page-half page-half-front">
+        9
+      </div>
+      <div class="page-half page-half-back">
+        10
+      </div>
+    </div>
+    <div class="page book-page" style="transform: translate3d(0px, 0px, -6px);">
+      <div class="page-half page-half-front">
+        11
+      </div>
+      <div class="page-half page-half-back">
+        12
+      </div>
+    </div>
+    <div class="page book-page" style="transform: translate3d(0px, 0px, -7px);">
+      <div class="page-half page-half-front">
+        13
+      </div>
+      <div class="page-half page-half-back">
+        14
+      </div>
+    </div> -->
+    <div class="page book-page book-back" style="transform: translate3d(0px, 0px, -8px);">
+      <div class="page-half page-half-front">
+
+      </div>
+      <div class="page-half page-half-back">
+        
+      </div>
+    </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
-    const pages = document.querySelectorAll('.page')
-    pages.forEach((item,index) => {
+    Vue.createApp({
+      data(){
+        return{
+          pageCount: 20,
+          
+        }
+      },
+      methods:{
 
-      gsap.to(item, {
-        rotateY: '-180',
-        scrollTrigger: {
-          scrub: 1,
-          start: 0+index*450,
-          end: 400+index*450
-        }
-      })
-      gsap.to(item, {
-        z: index,
-        scrollTrigger: {
-          scrub: 1,
-          start: 0+index*450,
-          end: 400+index*450
-        }
-      })
-    })
+      },
+      mounted(){
+        const pages = document.querySelectorAll('.page')
+        pages.forEach((item,index) => {
+
+          gsap.to(item, {
+            rotateY: '-180',
+            scrollTrigger: {
+              scrub: 1,
+              start: 0+index*450,
+              end: 400+index*450
+            }
+          })
+          gsap.to(item, {
+            z: index,
+            scrollTrigger: {
+              scrub: 1,
+              start: 0+index*450,
+              end: 400+index*450
+            }
+          })
+        })
+      },
+    }).mount('#book')
+    
+    
   </script>
 
 
