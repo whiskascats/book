@@ -6,86 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="css/all.css"> -->
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    :root {
-      --page-count: 20;
-      --page-scroll: 25;
-      --underline: rgba(64, 64, 64, 0.4);
-      --spine: #000;
-      --cover: #1a1a1a;
-      --bg: #4d4d4d;
-      --insert: #E8E3C6;
-      --page: #e6e6e6;
-    }
-    body {      
-      width: 100%;
-      height: var(--page-count)px;
-      background: url(./wood.jpg) fixed no-repeat center center / cover;
-    }
-    #book {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 200px;
-      height: 250px;
-      transform: translate(0%, -50%);
-      transform-style: preserve-3d;
-      perspective: 1200px;
-    }
-    .page {
-      position: absolute;      
-      width: 100%;
-      height: 100%;
-      transform-origin: 0 50%;
-      transform-style: preserve-3d;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      box-shadow: -2px 0 #000;
-    }
-    .page-half {
-      background-color: #fff;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-      backface-visibility: visible;
-      z-index: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: repeating-linear-gradient(0deg, #e6e6e6 0 1rem,rgba(64, 64, 64, 0.4) 1rem calc(1rem + 1px)) 0 1rem/100% 100% no-repeat, var(--page);
-    }
-    .page-half-front {
-      transform: rotateY(0deg) translate3d(0,0,0px);
-      border-radius: 0 5% 5% 0;
-    }
-    .book-cover .page-half-front {
-      background: #000;
-    }
-    .book-back .page-half-back {
-      background: #000;
-    }
-    .book-cover .page-half-back, .book-back .page-half-front {
-      height: 93%;
-      width: 90%;
-      background: var(--insert)
-    }
-    .page-half-back {
-      transform: rotateY(180deg) translate3d(0,0,1px);
-      border-radius: 5% 0 0 5%;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/app.css">
 </head>
 <body>
   <div id="book">
     <div class="page book-page book-cover" style="transform: translate3d(0px, 0px, 1px);">
       <div class="page-half page-half-front">
-
+        <h1 class="book-title">相簿</h1>
       </div>
       <div class="page-half page-half-back">
         
@@ -93,63 +20,16 @@
     </div>
     <div class="page book-page" :style="'transform: translate3d(0px, 0px, -'+index+'px);'" v-for="(count, index) in pageCount">
       <div class="page-half page-half-front">
-        {{count}}
+        <img :src="'https://picsum.photos/id/'+randNum()+'/150/200'" alt="">
       </div>
       <div class="page-half page-half-back">
-        {{count}}
+        <img :src="'https://picsum.photos/id/'+randNum()+'/150/200'" alt="">
       </div>
     </div>
-    <!-- <div class="page book-page" style="transform: translate3d(0px, 0px, -1px);">
-      <div class="page-half page-half-front">
-        3
-      </div>
-      <div class="page-half page-half-back">
-        4
-      </div>
-    </div>
-    <div class="page book-page" style="transform: translate3d(0px, 0px, -2px);">
-      <div class="page-half page-half-front">
-        5
-      </div>
-      <div class="page-half page-half-back">
-        6
-      </div>
-    </div>
-    <div class="page book-page" style="transform: translate3d(0px, 0px, -4px);">
-      <div class="page-half page-half-front">
-        7
-      </div>
-      <div class="page-half page-half-back">
-        8
-      </div>
-    </div>
-    <div class="page book-page" style="transform: translate3d(0px, 0px, -5px);">
-      <div class="page-half page-half-front">
-        9
-      </div>
-      <div class="page-half page-half-back">
-        10
-      </div>
-    </div>
-    <div class="page book-page" style="transform: translate3d(0px, 0px, -6px);">
-      <div class="page-half page-half-front">
-        11
-      </div>
-      <div class="page-half page-half-back">
-        12
-      </div>
-    </div>
-    <div class="page book-page" style="transform: translate3d(0px, 0px, -7px);">
-      <div class="page-half page-half-front">
-        13
-      </div>
-      <div class="page-half page-half-back">
-        14
-      </div>
-    </div> -->
-    <div class="page book-page book-back" style="transform: translate3d(0px, 0px, -8px);">
-      <div class="page-half page-half-front">
 
+    <div class="page book-page book-back" :style="'transform: translate3d(0px, 0px, -'+pageCount+'px);'">
+      <div class="page-half page-half-front">
+        <img class="gsap-logo" src="./gsap-logo.png" alt="">
       </div>
       <div class="page-half page-half-back">
         
@@ -170,12 +50,23 @@
         }
       },
       methods:{
-
+        randNum() {
+          return Math.floor(Math.random()*1000 +1)
+        }
       },
       mounted(){
         const pages = document.querySelectorAll('.page')
+        document.body.style.height = `${450 * (this.pageCount+2) + 400}px`
+        gsap.to('#book', {
+          scrollTrigger: {
+            scrub: 1,
+            start: 0,
+            end: 300
+          },
+          scale: 1.5
+        })
         pages.forEach((item,index) => {
-
+          if(pages.length == index+1) return
           gsap.to(item, {
             rotateY: '-180',
             scrollTrigger: {
@@ -192,6 +83,14 @@
               end: 400+index*450
             }
           })
+        })
+        gsap.to('.gsap-logo', {
+          scrollTrigger: {
+            scrub: 1,
+            start: (this.pageCount) * 450 + 100,
+            end: (this.pageCount) * 450 + 200
+          },
+          opacity: 1
         })
       },
     }).mount('#book')
